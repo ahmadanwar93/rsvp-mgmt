@@ -2,6 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { example } from "@/lib/const";
 import { formatDateTime } from "@/lib/utils";
+import Link from "next/link";
 import React from "react";
 
 // example data
@@ -29,32 +30,34 @@ function Page() {
             const startDateTime = formatDateTime(event.startDateTime);
             const endDateTime = formatDateTime(event.endDateTime);
             return (
-              <div key={event.id} className="py-8 border-b-1 border-gray-200">
-                <div className="flex justify-between items-center">
-                  <p className="font-semibold">{event.title}</p>
-                  <div className="flex gap-3">
-                    <Badge
-                      variant={statusVariant[event.status]}
-                      className="rounded-full"
-                    >
-                      {event.status}
-                    </Badge>
-                    <p>{event.guestNumber} guests</p>
+              <Link key={event.id} href="">
+                <div className="py-8 border-b-1 border-gray-200">
+                  <div className="flex justify-between items-center">
+                    <p className="font-semibold">{event.title}</p>
+                    <div className="flex gap-3">
+                      <Badge
+                        variant={statusVariant[event.status]}
+                        className="rounded-full"
+                      >
+                        {event.status}
+                      </Badge>
+                      <p>{event.guestNumber} guests</p>
+                    </div>
                   </div>
+                  <p className="text-text-grey">
+                    <span>Location: </span>
+                    {event.location}
+                  </p>
+                  <p className="text-text-grey">
+                    <span>Start time: </span>
+                    {startDateTime}
+                  </p>
+                  <p className="text-text-grey">
+                    <span>End time: </span>
+                    {endDateTime}
+                  </p>
                 </div>
-                <p className="text-text-grey">
-                  <span>Location: </span>
-                  {event.location}
-                </p>
-                <p className="text-text-grey">
-                  <span>Start time: </span>
-                  {startDateTime}
-                </p>
-                <p className="text-text-grey">
-                  <span>End time: </span>
-                  {endDateTime}
-                </p>
-              </div>
+              </Link>
             );
           })}
         </div>
