@@ -182,4 +182,10 @@ export const example: InvitationListProps[] = [
       status: "active",
     },
   ];
+
+  export const statusVariant = {
+    draft: "outline-draft",
+    active: "outline-active",
+    elapsed: "outline-elapsed",
+  } as const;
   

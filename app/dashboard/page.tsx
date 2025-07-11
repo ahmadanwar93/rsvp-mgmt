@@ -1,7 +1,7 @@
 import { DialogEvent } from "@/components/layout/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { example } from "@/lib/const";
+import { example, statusVariant } from "@/lib/const";
 import { formatDateTime } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
@@ -9,12 +9,6 @@ import React from "react";
 // example data
 // TODO: replace with server action later
 const exampleData = example;
-
-const statusVariant = {
-  draft: "outline-draft",
-  active: "outline-active",
-  elapsed: "outline-elapsed",
-} as const;
 
 function Page() {
   return (
