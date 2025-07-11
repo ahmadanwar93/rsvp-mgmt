@@ -127,3 +127,8 @@
     @apply bg-background text-foreground;
   }
 }
+
+@theme {
+  --color-text-grey: #6B7582
+}
+

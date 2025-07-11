@@ -36,7 +36,7 @@ export default function Home() {
           </div>
         </div>
       </section>
-      <section className="container-custom py-10 flex flex-col gap-10">
+      <section className=" py-10 flex flex-col gap-10">
         <div>
           <h2 className="font-extrabold text-4xl mb-4 text-center">
             Key Features
@@ -50,7 +50,7 @@ export default function Home() {
           <Card className="max-w-[300px]">
             <CardHeader>
               <UsersIcon />
-              <CardTitle>Guest Management</CardTitle>
+              <CardTitle className="mt-2">Guest Management</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
@@ -62,7 +62,7 @@ export default function Home() {
           <Card className="max-w-[300px]">
             <CardHeader>
               <CalendarIcon />
-              <CardTitle>RSVP Tracking</CardTitle>
+              <CardTitle className="mt-2">RSVP Tracking</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
@@ -74,7 +74,7 @@ export default function Home() {
           <Card className="max-w-[300px]">
             <CardHeader>
               <TickIcon />
-              <CardTitle>Invitation Updates</CardTitle>
+              <CardTitle className="mt-2">Invitation Updates</CardTitle>
             </CardHeader>
             <CardContent>
               <p>
@@ -85,7 +85,7 @@ export default function Home() {
           </Card>
         </div>
       </section>
-      <section className="container-custom">
+      <section className="">
         <h2 className="font-extrabold text-4xl mb-4 text-center">
           Ready to simplify your wedding planning?
         </h2>
