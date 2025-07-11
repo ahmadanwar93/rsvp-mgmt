@@ -1,6 +1,6 @@
-import { InvitationList } from "./types";
+import { InvitationListProps } from "./types";
 
-export const example: InvitationList[] = [
+export const example: InvitationListProps[] = [
     {
       id: "550e8400-e29b-41d4-a716-446655440000",
       title: "Sarah & Michael's Wedding",

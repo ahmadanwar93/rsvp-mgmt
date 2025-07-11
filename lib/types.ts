@@ -1,4 +1,4 @@
-export interface Invitation {
+export interface InvitationProps {
     id: string,
     title: string,
     location: string,
@@ -6,7 +6,17 @@ export interface Invitation {
     endDateTime: string,
 }
 
-export interface InvitationList extends Invitation{
+export interface InvitationListProps extends InvitationProps{
     guestNumber: number,
     status: 'draft' | 'active' | 'elapsed'
 }
+
+export interface dateTimePickerProps {
+  dateLabel?: string;
+  timeLabel?: string;
+}
+export interface DialogEventProps {
+    button: React.ReactNode;
+    title: string;
+    description: string;
+  }

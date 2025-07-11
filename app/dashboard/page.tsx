@@ -1,3 +1,4 @@
+import { DialogEvent } from "@/components/layout/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { example } from "@/lib/const";
@@ -21,16 +22,25 @@ function Page() {
       <section>
         <div className="flex justify-between items-center py-3">
           <h1 className="text-4xl font-bold">Invitations</h1>
-          <Button className="rounded-full" variant={"default"}>
-            New invitation
-          </Button>
+          <DialogEvent
+            button={
+              <Button
+                className="rounded-full cursor-pointer"
+                variant={"default"}
+              >
+                New invitation
+              </Button>
+            }
+            title="Create a new event"
+            description="Let us get some basic information to get going!"
+          />
         </div>
         <div className="flex flex-col">
           {exampleData.map((event) => {
             const startDateTime = formatDateTime(event.startDateTime);
             const endDateTime = formatDateTime(event.endDateTime);
             return (
-              <Link key={event.id} href="">
+              <Link key={event.id} href={`dashboard/events/${event.id}`}>
                 <div className="py-8 border-b-1 border-gray-200">
                   <div className="flex justify-between items-center">
                     <p className="font-semibold">{event.title}</p>
