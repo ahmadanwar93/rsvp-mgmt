@@ -1,6 +1,6 @@
-import { InvitationListProps } from "./types";
+import { EventInvitationProps, InvitationGuestProps } from "./types";
 
-export const example: InvitationListProps[] = [
+export const example: EventInvitationProps[] = [
     {
       id: "550e8400-e29b-41d4-a716-446655440000",
       title: "Sarah & Michael's Wedding",
@@ -188,4 +188,240 @@ export const example: InvitationListProps[] = [
     active: "outline-active",
     elapsed: "outline-elapsed",
   } as const;
+
+  export const inviteStatusVariant = {
+    attending: "default",
+    pending: "outline",
+    declined: "destructive",
+  } as const;
+
+  export const dietaryStatusVariant = {
+    none: "dietary-none",
+    vegetarian: "dietary-vegetarian",
+    vegan: "dietary-vegan",
+    "gluten free": "dietary-gluten-free",
+    halal: "dietary-halal",
+  } as const;
+
+  export const RESPOND_STATUSES = {
+    PENDING: 'pending',
+    ATTENDING: 'attending', 
+    DECLINING: 'declined'
+  } as const;
+  
+  export const DIETARY_RESTRICTIONS = {
+    VEGETARIAN: 'vegetarian',
+    VEGAN: 'vegan',
+    GLUTEN_FREE: 'gluten free',
+    HALAL: 'halal',
+    NONE: 'none'
+  } as const;
+
+
+  export const mockInvitationGuests: InvitationGuestProps[] = [
+    {
+      id: "550e8400-e29b-41d4-a716-446655440001",
+      name: "Emily Carter",
+      respond_status: "attending",
+      attendees_count: 2,
+      dietary_restrictions: "vegetarian",
+      responded_at: "2024-07-15T10:30:00",
+      created_at: "2024-07-01T09:00:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440002",
+      name: "David Lee",
+      respond_status: "pending",
+      attendees_count: 1,
+      dietary_restrictions: "none",
+      responded_at: "",
+      created_at: "2024-07-01T09:15:00",
+      guest_group: "workplace"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440003",
+      name: "Sarah Johnson",
+      respond_status: "declined",
+      attendees_count: 0,
+      dietary_restrictions: "none",
+      responded_at: "2024-07-18T14:22:00",
+      created_at: "2024-07-01T09:30:00",
+      guest_group: "family"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440004",
+      name: "Michael Brown",
+      respond_status: "attending",
+      attendees_count: 2,
+      dietary_restrictions: "gluten free",
+      responded_at: "2024-07-16T09:15:00",
+      created_at: "2024-07-01T09:45:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440005",
+      name: "Jessica Davis",
+      respond_status: "pending",
+      attendees_count: 3,
+      dietary_restrictions: "halal",
+      responded_at: "",
+      created_at: "2024-07-01T10:00:00",
+      guest_group: "family"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440006",
+      name: "Christopher Wilson",
+      respond_status: "attending",
+      attendees_count: 1,
+      dietary_restrictions: "vegan",
+      responded_at: "2024-07-19T16:45:00",
+      created_at: "2024-07-01T10:15:00",
+      guest_group: "casual"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440007",
+      name: "Amanda Rodriguez",
+      respond_status: "attending",
+      attendees_count: 4,
+      dietary_restrictions: "none",
+      responded_at: "2024-07-14T11:20:00",
+      created_at: "2024-07-01T10:30:00",
+      guest_group: "family"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440008",
+      name: "James Martinez",
+      respond_status: "declined",
+      attendees_count: 0,
+      dietary_restrictions: "vegetarian",
+      responded_at: "2024-07-17T13:30:00",
+      created_at: "2024-07-01T10:45:00",
+      guest_group: "workplace"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440009",
+      name: "Lisa Anderson",
+      respond_status: "pending",
+      attendees_count: 2,
+      dietary_restrictions: "gluten free",
+      responded_at: "",
+      created_at: "2024-07-01T11:00:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440010",
+      name: "Robert Taylor",
+      respond_status: "attending",
+      attendees_count: 1,
+      dietary_restrictions: "halal",
+      responded_at: "2024-07-20T08:45:00",
+      created_at: "2024-07-01T11:15:00",
+      guest_group: "casual"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440011",
+      name: "Ashley Thomas",
+      respond_status: "attending",
+      attendees_count: 3,
+      dietary_restrictions: "none",
+      responded_at: "2024-07-13T15:10:00",
+      created_at: "2024-07-01T11:30:00",
+      guest_group: "family"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440012",
+      name: "Kevin Garcia",
+      respond_status: "declined",
+      attendees_count: 0,
+      dietary_restrictions: "vegan",
+      responded_at: "2024-07-21T12:00:00",
+      created_at: "2024-07-01T11:45:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440013",
+      name: "Stephanie White",
+      respond_status: "pending",
+      attendees_count: 2,
+      dietary_restrictions: "vegetarian",
+      responded_at: "",
+      created_at: "2024-07-01T12:00:00",
+      guest_group: "workplace"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440014",
+      name: "Mark Thompson",
+      respond_status: "attending",
+      attendees_count: 1,
+      dietary_restrictions: "none",
+      responded_at: "2024-07-12T17:30:00",
+      created_at: "2024-07-01T12:15:00",
+      guest_group: "casual"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440015",
+      name: "Rachel Clark",
+      respond_status: "attending",
+      attendees_count: 2,
+      dietary_restrictions: "gluten free",
+      responded_at: "2024-07-22T10:15:00",
+      created_at: "2024-07-01T12:30:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440016",
+      name: "Daniel Lewis",
+      respond_status: "declined",
+      attendees_count: 0,
+      dietary_restrictions: "halal",
+      responded_at: "2024-07-16T14:45:00",
+      created_at: "2024-07-01T12:45:00",
+      guest_group: "family"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440017",
+      name: "Nicole Walker",
+      respond_status: "pending",
+      attendees_count: 1,
+      dietary_restrictions: "vegan",
+      responded_at: "",
+      created_at: "2024-07-01T13:00:00",
+      guest_group: "workplace"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440018",
+      name: "Ryan Hall",
+      respond_status: "attending",
+      attendees_count: 3,
+      dietary_restrictions: "none",
+      responded_at: "2024-07-18T09:30:00",
+      created_at: "2024-07-01T13:15:00",
+      guest_group: "casual"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440019",
+      name: "Melissa Young",
+      respond_status: "attending",
+      attendees_count: 2,
+      dietary_restrictions: "vegetarian",
+      responded_at: "2024-07-19T11:45:00",
+      created_at: "2024-07-01T13:30:00",
+      guest_group: "friend"
+    },
+    {
+      id: "550e8400-e29b-41d4-a716-446655440020",
+      name: "Brandon King",
+      respond_status: "declined",
+      attendees_count: 0,
+      dietary_restrictions: "gluten free",
+      responded_at: "2024-07-20T16:20:00",
+      created_at: "2024-07-01T13:45:00",
+      guest_group: "family"
+    }
+  ];
+
+  
+
+
   

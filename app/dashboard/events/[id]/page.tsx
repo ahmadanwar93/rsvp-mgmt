@@ -1,4 +1,5 @@
 import { DialogEvent } from "@/components/layout/dialog";
+import { InvitationTabs } from "@/components/layout/invitationTabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { example, statusVariant } from "@/lib/const";
@@ -50,7 +51,7 @@ async function Page({ params }: PageProps) {
               </Button>
             }
             title="Edit an existing event"
-            description="Let us edit some basic information to get going!"
+            description="Let us edit some basic information."
           />
         </div>
         <div className="flex flex-col py-2">
@@ -69,6 +70,9 @@ async function Page({ params }: PageProps) {
           <p className="font-semibold">End datetime</p>
           <p>{endDateTime}</p>
         </div>
+      </div>
+      <div className="pt-8">
+        <InvitationTabs />
       </div>
     </section>
   );

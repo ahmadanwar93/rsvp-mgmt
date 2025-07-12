@@ -23,6 +23,16 @@ const badgeVariants = cva(
           "bg-gray-50 text-gray-700 border-gray-200 [a&]:hover:bg-gray-100",
         "outline-elapsed":
           "bg-red-50 text-red-700 border-red-200 [a&]:hover:bg-red-100",
+        "dietary-none":
+          "bg-gray-50 text-gray-600 border-gray-200 [a&]:hover:bg-gray-100",
+        "dietary-vegetarian":
+          "bg-green-50 text-green-700 border-green-200 [a&]:hover:bg-green-100",
+        "dietary-vegan":
+          " text-emerald-700 border-emerald-400 [a&]:hover:bg-emerald-100",
+        "dietary-gluten-free":
+          "bg-blue-50 text-blue-700 border-blue-200 [a&]:hover:bg-blue-100",
+        "dietary-halal":
+          "bg-purple-50 text-purple-700 border-purple-200 [a&]:hover:bg-purple-100",
       },
     },
     defaultVariants: {

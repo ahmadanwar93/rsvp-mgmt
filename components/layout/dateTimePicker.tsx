@@ -12,12 +12,12 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { dateTimePickerProps } from "@/lib/types";
+import { DateTimePickerProps } from "@/lib/types";
 
 export function Calendar24({
   dateLabel = "Date",
   timeLabel = "Time",
-}: dateTimePickerProps) {
+}: DateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
 
