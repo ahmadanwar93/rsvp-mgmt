@@ -9,7 +9,7 @@ import { InfoIcon } from "lucide-react";
 export function InvitedTooltip({ invited_at }: InvitedToolTipProps) {
   return (
     <Tooltip>
-      <TooltipTrigger asChild className="hidden md:block">
+      <TooltipTrigger asChild className="hidden md:block mr-2.5">
         <InfoIcon className="size-4" />
       </TooltipTrigger>
       <TooltipContent>

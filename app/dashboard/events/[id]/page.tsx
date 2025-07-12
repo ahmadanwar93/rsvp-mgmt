@@ -38,18 +38,32 @@ async function Page({ params }: PageProps) {
               {eventDetail.status}
             </Badge>
           </div>
-          <DialogEvent
-            button={
-              <Button
-                className="rounded-full cursor-pointer"
-                variant={"default"}
-              >
-                Edit invitation
-              </Button>
-            }
-            title="Edit an existing event"
-            description="Let us edit some basic information."
-          />
+          <div className="flex gap-2">
+            <DialogEvent
+              button={
+                <Button
+                  className="rounded-full cursor-pointer"
+                  variant={"default"}
+                >
+                  Edit details
+                </Button>
+              }
+              title="Edit an existing event"
+              description="Let us edit some basic information."
+            />
+            <DialogEvent
+              button={
+                <Button
+                  className="rounded-full cursor-pointer"
+                  variant={"outline"}
+                >
+                  Add attendee
+                </Button>
+              }
+              title="Edit an existing event"
+              description="Let us edit some basic information."
+            />
+          </div>
         </div>
         <div className="flex flex-col py-2">
           <p className="font-semibold">Event title</p>

@@ -12,9 +12,9 @@ import {
   mockInvitationGuests,
 } from "@/lib/const";
 import { Badge } from "../ui/badge";
-import { CopyIcon } from "lucide-react";
 import { InvitedTooltip } from "./invitedTooltip";
 import { Button } from "../ui/button";
+import { TrashIcon, CopyIcon } from "@radix-ui/react-icons";
 
 export function TableInvite() {
   return (
@@ -56,10 +56,13 @@ export function TableInvite() {
               </Badge>
             </TableCell>
             <TableCell>
-              <div className="flex flex-row gap-4 justify-center items-center">
+              <div className="flex flex-row gap-2  items-center">
                 <InvitedTooltip invited_at={guest.created_at} />
                 <Button variant="ghost" size="icon">
                   <CopyIcon />
+                </Button>
+                <Button variant="ghost" size="icon">
+                  <TrashIcon />
                 </Button>
               </div>
             </TableCell>

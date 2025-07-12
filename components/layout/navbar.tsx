@@ -7,7 +7,7 @@ import { NavbarProps } from "@/lib/types";
 
 export function Navbar({ isAuth = true }: NavbarProps) {
   return (
-    <nav className="border-b bg-white sticky top-0">
+    <nav className="border-b bg-white sticky top-0 z-[100]">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         <Link href="/">
           <h1 className="text-xl font-semibold text-gray-900">Guest Tracker</h1>
