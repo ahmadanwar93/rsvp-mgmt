@@ -3,12 +3,9 @@ import { InvitationTabs } from "@/components/layout/invitationTabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { example, statusVariant } from "@/lib/const";
+import { PageProps } from "@/lib/types";
 import { formatDateTime } from "@/lib/utils";
 import React from "react";
-
-interface PageProps {
-  params: Promise<{ id: string }>;
-}
 
 async function Page({ params }: PageProps) {
   const { id } = await params;

@@ -1,4 +1,4 @@
-import { EventInvitationProps, InvitationGuestProps } from "./types";
+import { EventInvitationProps, IndividualGuestProps, InvitationGuestListProps } from "./types";
 
 export const example: EventInvitationProps[] = [
     {
@@ -218,7 +218,7 @@ export const example: EventInvitationProps[] = [
   } as const;
 
 
-  export const mockInvitationGuests: InvitationGuestProps[] = [
+  export const mockInvitationGuests: InvitationGuestListProps[] = [
     {
       id: "550e8400-e29b-41d4-a716-446655440001",
       name: "Emily Carter",
@@ -227,7 +227,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegetarian",
       responded_at: "2024-07-15T10:30:00",
       created_at: "2024-07-01T09:00:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440002",
@@ -237,7 +237,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "",
       created_at: "2024-07-01T09:15:00",
-      guest_group: "workplace"
+      guestGroup: "workplace"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440003",
@@ -247,7 +247,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "2024-07-18T14:22:00",
       created_at: "2024-07-01T09:30:00",
-      guest_group: "family"
+      guestGroup: "family"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440004",
@@ -257,7 +257,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "gluten free",
       responded_at: "2024-07-16T09:15:00",
       created_at: "2024-07-01T09:45:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440005",
@@ -267,7 +267,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "halal",
       responded_at: "",
       created_at: "2024-07-01T10:00:00",
-      guest_group: "family"
+      guestGroup: "family"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440006",
@@ -277,7 +277,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegan",
       responded_at: "2024-07-19T16:45:00",
       created_at: "2024-07-01T10:15:00",
-      guest_group: "casual"
+      guestGroup: "casual"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440007",
@@ -287,7 +287,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "2024-07-14T11:20:00",
       created_at: "2024-07-01T10:30:00",
-      guest_group: "family"
+      guestGroup: "family"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440008",
@@ -297,7 +297,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegetarian",
       responded_at: "2024-07-17T13:30:00",
       created_at: "2024-07-01T10:45:00",
-      guest_group: "workplace"
+      guestGroup: "workplace"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440009",
@@ -307,7 +307,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "gluten free",
       responded_at: "",
       created_at: "2024-07-01T11:00:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440010",
@@ -317,7 +317,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "halal",
       responded_at: "2024-07-20T08:45:00",
       created_at: "2024-07-01T11:15:00",
-      guest_group: "casual"
+      guestGroup: "casual"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440011",
@@ -327,7 +327,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "2024-07-13T15:10:00",
       created_at: "2024-07-01T11:30:00",
-      guest_group: "family"
+      guestGroup: "family"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440012",
@@ -337,7 +337,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegan",
       responded_at: "2024-07-21T12:00:00",
       created_at: "2024-07-01T11:45:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440013",
@@ -347,7 +347,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegetarian",
       responded_at: "",
       created_at: "2024-07-01T12:00:00",
-      guest_group: "workplace"
+      guestGroup: "workplace"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440014",
@@ -357,7 +357,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "2024-07-12T17:30:00",
       created_at: "2024-07-01T12:15:00",
-      guest_group: "casual"
+      guestGroup: "casual"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440015",
@@ -367,7 +367,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "gluten free",
       responded_at: "2024-07-22T10:15:00",
       created_at: "2024-07-01T12:30:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440016",
@@ -377,7 +377,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "halal",
       responded_at: "2024-07-16T14:45:00",
       created_at: "2024-07-01T12:45:00",
-      guest_group: "family"
+      guestGroup: "family"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440017",
@@ -387,7 +387,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegan",
       responded_at: "",
       created_at: "2024-07-01T13:00:00",
-      guest_group: "workplace"
+      guestGroup: "workplace"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440018",
@@ -397,7 +397,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "none",
       responded_at: "2024-07-18T09:30:00",
       created_at: "2024-07-01T13:15:00",
-      guest_group: "casual"
+      guestGroup: "casual"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440019",
@@ -407,7 +407,7 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "vegetarian",
       responded_at: "2024-07-19T11:45:00",
       created_at: "2024-07-01T13:30:00",
-      guest_group: "friend"
+      guestGroup: "friend"
     },
     {
       id: "550e8400-e29b-41d4-a716-446655440020",
@@ -417,9 +417,60 @@ export const example: EventInvitationProps[] = [
       dietary_restrictions: "gluten free",
       responded_at: "2024-07-20T16:20:00",
       created_at: "2024-07-01T13:45:00",
-      guest_group: "family"
+      guestGroup: "family"
     }
   ];
+
+  export const mockIndividualGuest: IndividualGuestProps = {
+    id: "550e8400-e29b-41d4-a716-446655440001",
+    name: "Emily Carter",
+    respond_status: "attending",
+    attendees_count: 2,
+    dietary_restrictions: "vegetarian",
+    responded_at: "2024-07-15T10:30:00",
+    created_at: "2024-07-01T09:00:00",
+    guestGroup: "friend",
+    event: {
+      id: "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+      title: "Emily & David's Wedding",
+      location: "City View Loft",
+      startDateTime: "2024-09-15T14:30:00",
+      endDateTime: "2024-09-15T22:30:00",
+      guestNumber: 85,
+    },
+    attendees: [
+      "Alice Johnson",
+      "Bob Smith",
+      "Carol Davis",
+      "David Wilson",
+      "Emma Brown",
+      "Frank Miller",
+      "Grace Lee",
+      "Henry Garcia",
+      "Isabella Martinez",
+      "Jack Anderson",
+      "Katherine Thompson",
+      "Liam Rodriguez",
+      "Maya Patel",
+      "Noah Kim",
+      "Olivia Chen",
+      "Peter Jackson",
+      "Quinn O'Connor",
+      "Rachel Green",
+      "Samuel Taylor",
+      "Tina Williams",
+      "Victor Martinez",
+      "Wendy Clark",
+      "Xavier Lopez",
+      "Yuki Tanaka",
+      "Zoe Adams",
+      "Aaron Blake",
+      "Bella Cooper",
+      "Carlos Rivera",
+      "Diana Foster",
+      "Ethan Moore"
+    ]
+  }
 
   
 

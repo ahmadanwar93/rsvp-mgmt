@@ -52,7 +52,7 @@ export function TableInvite() {
             </TableCell>
             <TableCell>
               <Badge className="rounded-full" variant={"outline"}>
-                {guest.guest_group}
+                {guest.guestGroup}
               </Badge>
             </TableCell>
             <TableCell>

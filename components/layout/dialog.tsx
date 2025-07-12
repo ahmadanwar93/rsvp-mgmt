@@ -15,6 +15,8 @@ import React from "react";
 import { Calendar24 } from "./dateTimePicker";
 import { DialogEventProps } from "@/lib/types";
 
+// TODO: react hook form?
+
 export function DialogEvent({ button, title, description }: DialogEventProps) {
   return (
     <Dialog>

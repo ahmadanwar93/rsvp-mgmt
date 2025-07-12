@@ -32,11 +32,38 @@ export interface InvitationGuestProps {
   respond_status: RespondStatus
   attendees_count: number
   dietary_restrictions: DietaryRestriction
-  guest_group: string
   responded_at: string
   created_at: string
+}
+
+export interface InvitationGuestListProps extends InvitationGuestProps{
+  guestGroup: string
 }
 
 export interface InvitedToolTipProps {
   invited_at: string
 }
+export interface NavbarProps {
+  isAuth?: boolean;
+}
+export interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export interface DetailedInvitationEventProps extends InvitationEventProps {
+  guestNumber: number
+}
+export interface BaseIndividualGuestProps extends InvitationGuestProps {
+  event: DetailedInvitationEventProps
+}
+
+// if the guest_group has can_see_others equals false, the attendee list will be empty and guestGroup equals null because I am not exposing the guestGroup name
+export type IndividualGuestProps = 
+| (BaseIndividualGuestProps & {
+      guestGroup: string
+      attendees: string[]
+    })
+  | (BaseIndividualGuestProps & {
+      guestGroup: null
+      attendees: null
+    })
