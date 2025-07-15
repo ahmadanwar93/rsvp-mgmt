@@ -1,11 +1,19 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { NavbarProps } from "@/lib/types";
+import { useSession, signOut } from "next-auth/react";
 
 // TODO: incorporate with auth
 
 export function Navbar({ isAuth = true }: NavbarProps) {
+  const { data: session, status } = useSession();
+
+  console.log("session", session);
+
+  if (status === "loading") return <div>Loading...</div>;
+
   return (
     <nav className="border-b bg-white sticky top-0 z-[100]">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -14,19 +22,24 @@ export function Navbar({ isAuth = true }: NavbarProps) {
         </Link>
 
         {isAuth && (
-          <div className="flex items-center gap-2 sm:gap-4">
-            <p className="hidden md:block text-sm text-gray-600">
-              sarah.miller@email.com
-            </p>
-
-            <Button variant="outline" className="text-sm rounded-full">
-              Log out
-            </Button>
-
-            <Avatar className="size-10">
-              <AvatarImage src="/avatar.jpg" alt="Sarah Miller" />
-              <AvatarFallback>Hi</AvatarFallback>
-            </Avatar>
+          <div className="flex items-center space-x-4">
+            {session ? (
+              <>
+                <span>
+                  Welcome, {session.user?.name || session.user?.email}
+                </span>
+                <Button onClick={() => signOut()} className="rounded-full">
+                  Sign Out
+                </Button>
+              </>
+            ) : (
+              <Button
+                asChild
+                className="bg-blue-500 text-white px-4 py-2  hover:bg-blue-600 rounded-full"
+              >
+                <Link href="/signin">Sign In</Link>
+              </Button>
+            )}
           </div>
         )}
       </div>

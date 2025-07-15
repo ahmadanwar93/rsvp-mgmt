@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UsersIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -27,8 +28,11 @@ export default function Home() {
             one place.
           </p>
           <div className="flex gap-4 mt-6">
-            <Button className="bg-blue-600 text-white rounded-full">
-              Get started
+            <Button
+              asChild
+              className="bg-blue-500 text-white px-4 py-2  hover:bg-blue-600 rounded-full"
+            >
+              <Link href="/signin">Get started</Link>
             </Button>
             <Button variant="outline" className="rounded-full">
               Learn more

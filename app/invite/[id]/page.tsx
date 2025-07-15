@@ -16,7 +16,7 @@ async function Page() {
     <section className="container-custom text-center">
       <div className="pb-8 border-b-1 border-gray-100">
         <p className="font-bold text-4xl pb-4">Hi,{guest.name} </p>
-        <p className="font-semibold text-xl">You`&apos;`re invited</p>
+        <p className="font-semibold text-xl">You&apos;re invited</p>
         <p className="font-light pb-5">Join us for the wedding of</p>
         <p className="font-bold text-2xl pb-5">{guest.event.title}</p>
         <p className="font-thin">
