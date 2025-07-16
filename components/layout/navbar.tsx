@@ -1,16 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
 import { NavbarProps } from "@/lib/types";
 import { useSession, signOut } from "next-auth/react";
 
-// TODO: incorporate with auth
+// TODO: check if it is possible to convert into a server component
 
 export function Navbar({ isAuth = true }: NavbarProps) {
   const { data: session, status } = useSession();
-
-  console.log("session", session);
 
   if (status === "loading") return <div>Loading...</div>;
 

@@ -17,6 +17,8 @@ import { DateTimePickerProps } from "@/lib/types";
 export function Calendar24({
   dateLabel = "Date",
   timeLabel = "Time",
+  dateName,
+  timeName,
 }: DateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
   const [date, setDate] = React.useState<Date | undefined>(undefined);
@@ -33,6 +35,8 @@ export function Calendar24({
               variant="outline"
               id="date-picker"
               className="w-32 justify-between font-normal"
+              name={dateName}
+              type="button"
             >
               {date ? date.toLocaleDateString() : "Select date"}
               <ChevronDownIcon />
@@ -50,6 +54,11 @@ export function Calendar24({
             />
           </PopoverContent>
         </Popover>
+        <input
+          type="hidden"
+          name={dateName}
+          value={date ? date.toISOString().split("T")[0] : ""}
+        />
       </div>
       <div className="flex flex-col gap-3">
         <Label htmlFor="time-picker" className="px-1">
@@ -59,6 +68,7 @@ export function Calendar24({
           type="time"
           id="time-picker"
           defaultValue="10:30:00"
+          name={timeName}
           className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
         />
       </div>

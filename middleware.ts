@@ -12,7 +12,6 @@ export default withAuth(
         // Return true if user is authenticated
         // this authorized callback will run before the custom middleware
         // can put RBAC here
-        console.log('token', token)
         return !!token
       },
     },

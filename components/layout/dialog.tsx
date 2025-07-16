@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -11,46 +13,100 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React from "react";
+import React, { useState, useTransition } from "react";
 import { Calendar24 } from "./dateTimePicker";
 import { DialogEventProps } from "@/lib/types";
-
-// TODO: react hook form?
+import { createEvent } from "@/actions/events";
+import { toast } from "sonner";
+import { Calendar22 } from "./datePicker";
 
 export function DialogEvent({ button, title, description }: DialogEventProps) {
+  const [open, setOpen] = useState(false);
+  const [isPending, startTransition] = useTransition();
+  const [errors, setErrors] = useState<string | null>(null);
+
+  async function handleSubmit(formData: FormData) {
+    startTransition(async () => {
+      setErrors(null);
+
+      const result = await createEvent(formData);
+
+      if (result.success) {
+        toast.success("Event created successfully!");
+        setOpen(false);
+        // Reset form by closing and reopening dialog
+      } else {
+        setErrors(result.error!);
+      }
+    });
+  }
   return (
-    <Dialog>
-      <form>
-        <DialogTrigger asChild>{button}</DialogTrigger>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{button}</DialogTrigger>
+      <DialogContent className="sm:max-w-[425px]">
+        <form action={handleSubmit}>
+          <DialogHeader className="mb-4">
             <DialogTitle>{title}</DialogTitle>
             <DialogDescription>{description}</DialogDescription>
           </DialogHeader>
+
+          {errors && (
+            <div className="bg-destructive/15 border border-destructive/20 rounded-md p-3 mb-4">
+              <p className="text-sm text-destructive">{errors}</p>
+            </div>
+          )}
+
           <div className="grid gap-4">
             <div className="grid gap-3">
               <Label htmlFor="title">Title</Label>
-              <Input id="title" name="title" placeholder="Event title here" />
+              <Input
+                id="title"
+                name="title"
+                placeholder="Event title here"
+                required
+              />
             </div>
             <div className="grid gap-3">
-              <Label htmlFor="venue">Venue</Label>
-              <Input id="venue" name="venue" placeholder="Event venue here" />
+              <Label htmlFor="location">Location</Label>
+              <Input
+                id="location"
+                name="location"
+                placeholder="Event location here"
+                required
+              />
             </div>
             <div className="grid gap-3">
-              <Calendar24 dateLabel="start date" timeLabel="start time" />
+              <Calendar24
+                dateLabel="Start date"
+                timeLabel="Start time"
+                dateName="startDate"
+                timeName="startTime"
+              />
             </div>
             <div className="grid gap-3">
-              <Calendar24 dateLabel="end date" timeLabel="end time" />
+              <Calendar24
+                dateLabel="End date"
+                timeLabel="End time"
+                dateName="endDate"
+                timeName="endTime"
+              />
+            </div>
+            <div className="grid gap-3">
+              <Calendar22 dateLabel="RSVP deadline" dateName="rsvpDeadline" />
             </div>
           </div>
           <DialogFooter className="mt-6">
             <DialogClose asChild>
-              <Button variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">
+                Cancel
+              </Button>
             </DialogClose>
-            <Button type="submit">Save changes</Button>
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Creating..." : "Save changes"}
+            </Button>
           </DialogFooter>
-        </DialogContent>
-      </form>
+        </form>
+      </DialogContent>
     </Dialog>
   );
 }

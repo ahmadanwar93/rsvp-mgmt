@@ -16,6 +16,8 @@ export interface EventInvitationProps extends InvitationEventProps{
 export interface DateTimePickerProps {
   dateLabel?: string;
   timeLabel?: string;
+  dateName: string
+  timeName: string
 }
 export interface DialogEventProps {
     button: React.ReactNode;

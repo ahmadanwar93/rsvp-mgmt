@@ -1,4 +1,4 @@
-import NextAuth from "next-auth"
+import NextAuth, { AuthOptions } from "next-auth"
 import EmailProvider from "next-auth/providers/email"
 import { DrizzleAdapter } from "@auth/drizzle-adapter"
 import { db } from "@/src/db"
@@ -25,7 +25,7 @@ const emailConfig = process.env.NODE_ENV === 'production'
       },
     }
 
-const handler = NextAuth({
+export const authOptions:AuthOptions = {
     adapter: DrizzleAdapter(db, {
       usersTable: users,
       accountsTable: accounts,
@@ -94,6 +94,8 @@ const handler = NextAuth({
           }
         }
       }
-  })
+  }
+
+const handler = NextAuth(authOptions)
 
   export { handler as GET, handler as POST }

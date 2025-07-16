@@ -1,16 +1,23 @@
+import { indexEvent } from "@/actions/events";
 import { DialogEvent } from "@/components/layout/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { example, statusVariant } from "@/lib/const";
+import { statusVariant } from "@/lib/const";
 import { formatDateTime } from "@/lib/utils";
 import Link from "next/link";
 import React from "react";
 
-// example data
-// TODO: replace with server action later
-const exampleData = example;
+async function Page() {
+  const { data, error } = await indexEvent();
+  // TODO: think of a better way to handle errors and no data
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
 
-function Page() {
+  if (!data) {
+    return <div>No data</div>;
+  }
+
   return (
     <main className="container-custom">
       <section>
@@ -30,7 +37,7 @@ function Page() {
           />
         </div>
         <div className="flex flex-col">
-          {exampleData.map((event) => {
+          {data.map((event) => {
             const startDateTime = formatDateTime(event.startDateTime);
             const endDateTime = formatDateTime(event.endDateTime);
             return (
