@@ -8,6 +8,13 @@
       "when": 1752492356608,
       "tag": "0000_kind_saracen",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1752638879266,
+      "tag": "0001_illegal_professor_monster",
+      "breakpoints": true
     }
   ]
 }
