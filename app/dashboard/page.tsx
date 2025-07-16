@@ -1,4 +1,4 @@
-import { indexEvent } from "@/actions/events";
+import { getEventsByUserId } from "@/actions/events";
 import { DialogEvent } from "@/components/layout/dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -8,7 +8,7 @@ import Link from "next/link";
 import React from "react";
 
 async function Page() {
-  const { data, error } = await indexEvent();
+  const { data, error } = await getEventsByUserId();
   // TODO: think of a better way to handle errors and no data
   if (error) {
     return <div>Error: {error}</div>;

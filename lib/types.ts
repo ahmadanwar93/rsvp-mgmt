@@ -1,49 +1,57 @@
 import { DIETARY_RESTRICTIONS, RESPOND_STATUSES } from "./const";
 
 export interface InvitationEventProps {
-    id: string,
-    title: string,
-    location: string,
-    startDateTime: string,
-    endDateTime: string,
+  id: string;
+  title: string;
+  location: string;
+  startDateTime: string;
+  endDateTime: string;
 }
 
-export interface EventInvitationProps extends InvitationEventProps{
-    guestNumber: number,
-    status: 'draft' | 'active' | 'elapsed'
+export interface EventInvitationProps extends InvitationEventProps {
+  guestNumber: number;
+  status: "draft" | "active" | "elapsed";
 }
 
 export interface DateTimePickerProps {
   dateLabel?: string;
   timeLabel?: string;
-  dateName: string
-  timeName: string
+  dateName: string;
+  timeName: string;
 }
 export interface DialogEventProps {
-    button: React.ReactNode;
-    title: string;
-    description: string;
-  }
-
-export type RespondStatus = typeof RESPOND_STATUSES[keyof typeof RESPOND_STATUSES];
-export type DietaryRestriction = typeof DIETARY_RESTRICTIONS[keyof typeof DIETARY_RESTRICTIONS];
-
-export interface InvitationGuestProps {
-  id: string
-  name: string
-  respond_status: RespondStatus
-  attendees_count: number
-  dietary_restrictions: DietaryRestriction
-  responded_at: string
-  created_at: string
+  button: React.ReactNode;
+  title: string;
+  description: string;
+  data: showEventProps;
+}
+export interface EditEventDialogProps {
+  button: React.ReactNode;
+  title: string;
+  description: string;
 }
 
-export interface InvitationGuestListProps extends InvitationGuestProps{
-  guestGroup: string
+export type RespondStatus =
+  (typeof RESPOND_STATUSES)[keyof typeof RESPOND_STATUSES];
+export type DietaryRestriction =
+  (typeof DIETARY_RESTRICTIONS)[keyof typeof DIETARY_RESTRICTIONS];
+
+export interface InvitationGuestProps {
+  id: string;
+  name: string;
+  respond_status: RespondStatus;
+  attendees_count: number;
+  dietary_restrictions: DietaryRestriction;
+  responded_at: string;
+  created_at: string;
+}
+
+export interface InvitationGuestListProps extends InvitationGuestProps {
+  guestGroup: string;
 }
 
 export interface InvitedToolTipProps {
-  invited_at: string
+  invited_at: string;
 }
 export interface NavbarProps {
   isAuth?: boolean;
@@ -53,19 +61,30 @@ export interface PageProps {
 }
 
 export interface DetailedInvitationEventProps extends InvitationEventProps {
-  guestNumber: number
+  guestNumber: number;
 }
 export interface BaseIndividualGuestProps extends InvitationGuestProps {
-  event: DetailedInvitationEventProps
+  event: DetailedInvitationEventProps;
 }
 
 // if the guest_group has can_see_others equals false, the attendee list will be empty and guestGroup equals null because I am not exposing the guestGroup name
-export type IndividualGuestProps = 
-| (BaseIndividualGuestProps & {
-      guestGroup: string
-      attendees: string[]
+export type IndividualGuestProps =
+  | (BaseIndividualGuestProps & {
+      guestGroup: string;
+      attendees: string[];
     })
   | (BaseIndividualGuestProps & {
-      guestGroup: null
-      attendees: null
-    })
+      guestGroup: null;
+      attendees: null;
+    });
+
+// TODO: redo the types of the event, use less inheritance
+export interface showEventProps {
+  id: string;
+  title: string;
+  location: string;
+  startDateTime: string;
+  endDateTime: string;
+  status: "draft" | "active" | "elapsed";
+  rsvpDeadline: string;
+}

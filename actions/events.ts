@@ -6,8 +6,8 @@ import { db } from "@/src/db";
 import { events, guests, InsertEvent } from "@/src/db/schema";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { EventInvitationProps } from "@/lib/types";
-import { eq, sql } from "drizzle-orm";
+import { EventInvitationProps, showEventProps } from "@/lib/types";
+import { and, eq, sql } from "drizzle-orm";
 
 // TODO: not sure if this is the best way to do this
 interface ExtendedUser {
@@ -78,7 +78,7 @@ export async function createEvent(formData: FormData) {
   }
 }
 
-export async function indexEvent(): Promise<{
+export async function getEventsByUserId(): Promise<{
   success: boolean;
   data?: EventInvitationProps[];
   error?: string;
@@ -126,6 +126,44 @@ export async function indexEvent(): Promise<{
     return {
       success: false,
       error: "Failed to fetch events. Please try again.",
+    };
+  }
+}
+
+export async function getEventById(id: string) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    return { success: false, error: "You must be logged in to view an event" };
+  }
+
+  try {
+    const event = await db
+      .select()
+      .from(events)
+      .where(
+        and(
+          eq(events.id, id),
+          eq(events.userId, (session.user as ExtendedUser).id)
+        )
+      )
+      .limit(1);
+
+    const formattedEvent: showEventProps = {
+      id: event[0].id,
+      title: event[0].title,
+      location: event[0].location,
+      startDateTime: event[0].eventStartDatetime.toISOString(),
+      endDateTime: event[0].eventEndDatetime.toISOString(),
+      status: event[0].status,
+      rsvpDeadline: event[0].rsvpDeadline.toISOString(),
+    };
+
+    return { success: true, data: formattedEvent, unformattedData: event[0] };
+  } catch (error) {
+    console.error("Failed to fetch event:", error);
+    return {
+      success: false,
+      error: "Failed to fetch event. Please try again.",
     };
   }
 }

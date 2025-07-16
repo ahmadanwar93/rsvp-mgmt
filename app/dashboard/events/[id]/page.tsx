@@ -1,8 +1,9 @@
-import { DialogEvent } from "@/components/layout/dialog";
+import { getEventById } from "@/actions/events";
+import { EditEventDialog } from "@/components/layout/editEventDialog";
 import { InvitationTabs } from "@/components/layout/invitationTabs";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { example, statusVariant } from "@/lib/const";
+import { statusVariant } from "@/lib/const";
 import { PageProps } from "@/lib/types";
 import { formatDateTime } from "@/lib/utils";
 import React from "react";
@@ -10,14 +11,18 @@ import React from "react";
 async function Page({ params }: PageProps) {
   const { id } = await params;
 
-  // replace this with server actions later
-  const eventDetail = example.find((event) => event.id === id);
-  if (!eventDetail) {
-    return null;
+  const { data, error } = await getEventById(id);
+  if (error) {
+    return <div>Error: {error}</div>;
   }
+  if (!data) {
+    return <div>No data</div>;
+  }
+  const eventDetail = data;
 
   const startDateTime = formatDateTime(eventDetail.startDateTime);
   const endDateTime = formatDateTime(eventDetail.endDateTime);
+  const rsvpDeadline = formatDateTime(eventDetail.rsvpDeadline);
 
   return (
     <section className="container-custom">
@@ -39,7 +44,7 @@ async function Page({ params }: PageProps) {
             </Badge>
           </div>
           <div className="flex gap-2">
-            <DialogEvent
+            <EditEventDialog
               button={
                 <Button
                   className="rounded-full cursor-pointer"
@@ -50,8 +55,9 @@ async function Page({ params }: PageProps) {
               }
               title="Edit an existing event"
               description="Let us edit some basic information."
+              data={data}
             />
-            <DialogEvent
+            {/* <DialogEvent
               button={
                 <Button
                   className="rounded-full cursor-pointer"
@@ -62,7 +68,7 @@ async function Page({ params }: PageProps) {
               }
               title="Edit an existing event"
               description="Let us edit some basic information."
-            />
+            /> */}
           </div>
         </div>
         <div className="flex flex-col py-2">
@@ -80,6 +86,10 @@ async function Page({ params }: PageProps) {
         <div className="flex flex-col py-2">
           <p className="font-semibold">End datetime</p>
           <p>{endDateTime}</p>
+        </div>
+        <div className="flex flex-col py-2">
+          <p className="font-semibold">RSVP deadline</p>
+          <p>{rsvpDeadline}</p>
         </div>
       </div>
       <div className="pt-8">
