@@ -1,5 +1,5 @@
 "use server";
-import { createEventSchema } from "@/lib/schema";
+import { convertToISODate, createEventSchema } from "@/lib/schema";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
 import { db } from "@/src/db";
@@ -34,19 +34,47 @@ export async function createEvent(formData: FormData) {
     startTime: formData.get("startTime") as string,
     endDate: formData.get("endDate") as string,
     endTime: formData.get("endTime") as string,
-    rsvpDeadline: formData.get("rsvpDeadline") as string,
+    rsvpDeadlineDate: formData.get("rsvpDeadlineDate") as string,
+    rsvpDeadlineTime: formData.get("rsvpDeadlineTime") as string,
   };
 
   try {
+    // console.log("rawData", rawData);
+    // console.log(
+    //   "rawData.startDate",
+    //   rawData.startDate,
+    //   typeof rawData.startDate
+    // );
+    // console.log("rawData.endDate", rawData.endDate, typeof rawData.endDate);
+    // console.log(
+    //   "rawData.rsvpDeadlineDate",
+    //   rawData.rsvpDeadlineDate,
+    //   typeof rawData.rsvpDeadlineDate
+    // );
+
     const validatedData = createEventSchema.parse(rawData);
+
+    const startDateISO = convertToISODate(validatedData.startDate);
+    const rsvpDateISO = convertToISODate(validatedData.rsvpDeadlineDate);
+    const endDateISO = convertToISODate(validatedData.endDate);
+
     const eventStartDatetime = new Date(
-      `${validatedData.startDate}T${validatedData.startTime}`
+      `${startDateISO}T${validatedData.startTime}`
     );
-    const eventEndDatetime = new Date(
-      `${validatedData.endDate}T${validatedData.endTime}`
+    const eventEndDatetime = new Date(`${endDateISO}T${validatedData.endTime}`);
+    const rsvpDeadline = new Date(
+      `${rsvpDateISO}T${validatedData.rsvpDeadlineTime}`
     );
-    // For now, I put it at the start of the day
-    const rsvpDeadline = new Date(`${validatedData.rsvpDeadline}T00:00:00`);
+
+    // const eventStartDatetime = new Date(
+    //   `${validatedData.startDate}T${validatedData.startTime}`
+    // );
+    // const eventEndDatetime = new Date(
+    //   `${validatedData.endDate}T${validatedData.endTime}`
+    // );
+    // const rsvpDeadline = new Date(
+    //   `${validatedData.rsvpDeadlineDate}T${validatedData.rsvpDeadlineTime}`
+    // );
 
     const eventData: InsertEvent = {
       userId: (session.user as ExtendedUser).id,
@@ -156,6 +184,8 @@ export async function getEventById(id: string) {
       endDateTime: event[0].eventEndDatetime.toISOString(),
       status: event[0].status,
       rsvpDeadline: event[0].rsvpDeadline.toISOString(),
+      // rsvpDeadlineDate: event[0].rsvpDeadline.toISOString().split("T")[0],
+      // rsvpDeadlineTime: event[0].rsvpDeadline.toISOString().split("T")[1],
     };
 
     return { success: true, data: formattedEvent, unformattedData: event[0] };

@@ -19,9 +19,13 @@ export function Calendar24({
   timeLabel = "Time",
   dateName,
   timeName,
+  defaultDate,
+  defaultTime,
 }: DateTimePickerProps) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
+  const [date, setDate] = React.useState<Date | undefined>(
+    defaultDate ? defaultDate : undefined
+  );
 
   return (
     <div className="flex gap-4">
@@ -57,7 +61,7 @@ export function Calendar24({
         <input
           type="hidden"
           name={dateName}
-          value={date ? date.toISOString().split("T")[0] : ""}
+          value={date ? date.toLocaleDateString() : ""}
         />
       </div>
       <div className="flex flex-col gap-3">
@@ -67,7 +71,7 @@ export function Calendar24({
         <Input
           type="time"
           id="time-picker"
-          defaultValue="10:30:00"
+          defaultValue={defaultTime ? defaultTime : "22:30:00"}
           name={timeName}
           className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
         />

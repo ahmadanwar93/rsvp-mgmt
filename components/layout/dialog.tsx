@@ -18,7 +18,6 @@ import { Calendar24 } from "./dateTimePicker";
 import { DialogEventProps } from "@/lib/types";
 import { createEvent } from "@/actions/events";
 import { toast } from "sonner";
-import { Calendar22 } from "./datePicker";
 
 export function DialogEvent({ button, title, description }: DialogEventProps) {
   const [open, setOpen] = useState(false);
@@ -92,7 +91,13 @@ export function DialogEvent({ button, title, description }: DialogEventProps) {
               />
             </div>
             <div className="grid gap-3">
-              <Calendar22 dateLabel="RSVP deadline" dateName="rsvpDeadline" />
+              <Calendar24
+                dateLabel="RSVP deadline"
+                timeLabel="RSVP deadline"
+                dateName="rsvpDeadlineDate"
+                timeName="rsvpDeadlineTime"
+              />
+              {/* <Calendar22 dateLabel="RSVP deadline" dateName="rsvpDeadline" /> */}
             </div>
           </div>
           <DialogFooter className="mt-6">

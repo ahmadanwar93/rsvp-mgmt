@@ -18,6 +18,8 @@ export interface DateTimePickerProps {
   timeLabel?: string;
   dateName: string;
   timeName: string;
+  defaultDate?: Date;
+  defaultTime?: string;
 }
 export interface DialogEventProps {
   button: React.ReactNode;

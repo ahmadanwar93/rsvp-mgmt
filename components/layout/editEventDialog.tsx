@@ -13,12 +13,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import React, { useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { Calendar24 } from "./dateTimePicker";
 import { DialogEventProps } from "@/lib/types";
 import { createEvent } from "@/actions/events";
 import { toast } from "sonner";
-import { Calendar22 } from "./datePicker";
 
 export function EditEventDialog({
   button,
@@ -29,8 +28,24 @@ export function EditEventDialog({
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [errors, setErrors] = useState<string | null>(null);
+  const [formTitle, setFormTitle] = useState(data.title);
+  const [formLocation, setFormLocation] = useState(data.location);
 
-  console.log(data);
+  const startDateTime = new Date(data.startDateTime);
+  const endDateTime = new Date(data.endDateTime);
+  const rsvpDeadline = new Date(data.rsvpDeadline);
+
+  // TODO: recheck if needed to put in a separate function
+  const parsedData = {
+    title: data.title,
+    location: data.location,
+    startDate: startDateTime,
+    startTime: startDateTime.toLocaleTimeString(),
+    endDate: endDateTime,
+    endTime: endDateTime.toLocaleTimeString(),
+    rsvpDeadlineDate: rsvpDeadline,
+    rsvpDeadlineTime: rsvpDeadline.toLocaleTimeString(),
+  };
 
   async function handleSubmit(formData: FormData) {
     startTransition(async () => {
@@ -47,6 +62,13 @@ export function EditEventDialog({
       }
     });
   }
+
+  // this is to ensure the form values are reset when the dialog is closed
+  useEffect(() => {
+    setFormTitle(data.title);
+    setFormLocation(data.location);
+  }, [data.title, data.location, open]);
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>{button}</DialogTrigger>
@@ -69,7 +91,8 @@ export function EditEventDialog({
               <Input
                 id="title"
                 name="title"
-                placeholder={data.title}
+                value={formTitle}
+                onChange={(e) => setFormTitle(e.target.value)}
                 required
               />
             </div>
@@ -78,7 +101,8 @@ export function EditEventDialog({
               <Input
                 id="location"
                 name="location"
-                placeholder={data.location}
+                value={formLocation}
+                onChange={(e) => setFormLocation(e.target.value)}
                 required
               />
             </div>
@@ -88,6 +112,8 @@ export function EditEventDialog({
                 timeLabel="Start time"
                 dateName="startDate"
                 timeName="startTime"
+                defaultDate={parsedData.startDate}
+                defaultTime={parsedData.startTime}
               />
             </div>
             <div className="grid gap-3">
@@ -96,10 +122,19 @@ export function EditEventDialog({
                 timeLabel="End time"
                 dateName="endDate"
                 timeName="endTime"
+                defaultDate={parsedData.endDate}
+                defaultTime={parsedData.endTime}
               />
             </div>
             <div className="grid gap-3">
-              <Calendar22 dateLabel="RSVP deadline" dateName="rsvpDeadline" />
+              <Calendar24
+                dateLabel="RSVP deadline"
+                timeLabel="RSVP deadline"
+                dateName="rsvpDeadlineDate"
+                timeName="rsvpDeadlineTime"
+                defaultDate={parsedData.rsvpDeadlineDate}
+                defaultTime={parsedData.rsvpDeadlineTime}
+              />
             </div>
           </div>
           <DialogFooter className="mt-6">
