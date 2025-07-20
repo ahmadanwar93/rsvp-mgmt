@@ -15,48 +15,33 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useEffect, useState, useTransition } from "react";
 import { Calendar24 } from "./dateTimePicker";
-import { DialogEventProps } from "@/lib/types";
-import { createEvent } from "@/actions/events";
+import { EditEventDialogProps } from "@/lib/types";
+import { updateEvent } from "@/actions/events";
 import { toast } from "sonner";
+import { parseFormData } from "@/lib/utils";
 
 export function EditEventDialog({
   button,
   title,
   description,
   data,
-}: DialogEventProps) {
+}: EditEventDialogProps) {
   const [open, setOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [errors, setErrors] = useState<string | null>(null);
   const [formTitle, setFormTitle] = useState(data.title);
   const [formLocation, setFormLocation] = useState(data.location);
-
-  const startDateTime = new Date(data.startDateTime);
-  const endDateTime = new Date(data.endDateTime);
-  const rsvpDeadline = new Date(data.rsvpDeadline);
-
-  // TODO: recheck if needed to put in a separate function
-  const parsedData = {
-    title: data.title,
-    location: data.location,
-    startDate: startDateTime,
-    startTime: startDateTime.toLocaleTimeString(),
-    endDate: endDateTime,
-    endTime: endDateTime.toLocaleTimeString(),
-    rsvpDeadlineDate: rsvpDeadline,
-    rsvpDeadlineTime: rsvpDeadline.toLocaleTimeString(),
-  };
+  const parsedData = parseFormData(data);
 
   async function handleSubmit(formData: FormData) {
     startTransition(async () => {
       setErrors(null);
 
-      const result = await createEvent(formData);
+      const result = await updateEvent(data.id, formData);
 
       if (result.success) {
-        toast.success("Event created successfully!");
+        toast.success("Event updated successfully!");
         setOpen(false);
-        // Reset form by closing and reopening dialog
       } else {
         setErrors(result.error!);
       }

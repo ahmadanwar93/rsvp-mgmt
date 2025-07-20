@@ -25,12 +25,13 @@ export interface DialogEventProps {
   button: React.ReactNode;
   title: string;
   description: string;
-  data: showEventProps;
+  data?: showEventProps;
 }
 export interface EditEventDialogProps {
   button: React.ReactNode;
   title: string;
   description: string;
+  data: showEventProps;
 }
 
 export type RespondStatus =
@@ -83,10 +84,27 @@ export type IndividualGuestProps =
 // TODO: redo the types of the event, use less inheritance
 export interface showEventProps {
   id: string;
+  userId: string;
   title: string;
   location: string;
   startDateTime: string;
   endDateTime: string;
   status: "draft" | "active" | "elapsed";
   rsvpDeadline: string;
+}
+
+// TODO: not sure if this is the best way to do this
+export interface ExtendedUser {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+}
+
+export interface attendingGuest {
+  name: string;
+}
+
+export interface getEventSummaryProps {
+  eventId: string;
 }

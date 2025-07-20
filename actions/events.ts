@@ -1,21 +1,18 @@
 "use server";
-import { convertToISODate, createEventSchema } from "@/lib/schema";
+import { createEventSchema } from "@/lib/schema";
 import { revalidatePath } from "next/cache";
 import { ZodError } from "zod";
 import { db } from "@/src/db";
 import { events, guests, InsertEvent } from "@/src/db/schema";
 import { getServerSession } from "next-auth/next";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import { EventInvitationProps, showEventProps } from "@/lib/types";
+import {
+  EventInvitationProps,
+  ExtendedUser,
+  showEventProps,
+} from "@/lib/types";
 import { and, eq, sql } from "drizzle-orm";
-
-// TODO: not sure if this is the best way to do this
-interface ExtendedUser {
-  id: string;
-  name?: string | null;
-  email?: string | null;
-  image?: string | null;
-}
+import { convertToISODate } from "@/lib/utils";
 
 export async function createEvent(formData: FormData) {
   const session = await getServerSession(authOptions);
@@ -39,19 +36,6 @@ export async function createEvent(formData: FormData) {
   };
 
   try {
-    // console.log("rawData", rawData);
-    // console.log(
-    //   "rawData.startDate",
-    //   rawData.startDate,
-    //   typeof rawData.startDate
-    // );
-    // console.log("rawData.endDate", rawData.endDate, typeof rawData.endDate);
-    // console.log(
-    //   "rawData.rsvpDeadlineDate",
-    //   rawData.rsvpDeadlineDate,
-    //   typeof rawData.rsvpDeadlineDate
-    // );
-
     const validatedData = createEventSchema.parse(rawData);
 
     const startDateISO = convertToISODate(validatedData.startDate);
@@ -65,16 +49,6 @@ export async function createEvent(formData: FormData) {
     const rsvpDeadline = new Date(
       `${rsvpDateISO}T${validatedData.rsvpDeadlineTime}`
     );
-
-    // const eventStartDatetime = new Date(
-    //   `${validatedData.startDate}T${validatedData.startTime}`
-    // );
-    // const eventEndDatetime = new Date(
-    //   `${validatedData.endDate}T${validatedData.endTime}`
-    // );
-    // const rsvpDeadline = new Date(
-    //   `${validatedData.rsvpDeadlineDate}T${validatedData.rsvpDeadlineTime}`
-    // );
 
     const eventData: InsertEvent = {
       userId: (session.user as ExtendedUser).id,
@@ -184,8 +158,7 @@ export async function getEventById(id: string) {
       endDateTime: event[0].eventEndDatetime.toISOString(),
       status: event[0].status,
       rsvpDeadline: event[0].rsvpDeadline.toISOString(),
-      // rsvpDeadlineDate: event[0].rsvpDeadline.toISOString().split("T")[0],
-      // rsvpDeadlineTime: event[0].rsvpDeadline.toISOString().split("T")[1],
+      userId: event[0].userId,
     };
 
     return { success: true, data: formattedEvent, unformattedData: event[0] };
@@ -194,6 +167,75 @@ export async function getEventById(id: string) {
     return {
       success: false,
       error: "Failed to fetch event. Please try again.",
+    };
+  }
+}
+
+export async function updateEvent(eventId: string, formData: FormData) {
+  const session = await getServerSession(authOptions);
+  if (!session || !session.user) {
+    return {
+      success: false,
+      error: "You must be logged in to update an event",
+    };
+  }
+
+  const rawData = {
+    title: formData.get("title") as string,
+    location: formData.get("location") as string,
+    startDate: formData.get("startDate") as string,
+    startTime: formData.get("startTime") as string,
+    endDate: formData.get("endDate") as string,
+    endTime: formData.get("endTime") as string,
+    rsvpDeadlineDate: formData.get("rsvpDeadlineDate") as string,
+    rsvpDeadlineTime: formData.get("rsvpDeadlineTime") as string,
+  };
+
+  try {
+    const validatedData = createEventSchema.parse(rawData);
+
+    const startDateISO = convertToISODate(validatedData.startDate);
+    const rsvpDateISO = convertToISODate(validatedData.rsvpDeadlineDate);
+    const endDateISO = convertToISODate(validatedData.endDate);
+
+    const eventStartDatetime = new Date(
+      `${startDateISO}T${validatedData.startTime}`
+    );
+    const eventEndDatetime = new Date(`${endDateISO}T${validatedData.endTime}`);
+    const rsvpDeadline = new Date(
+      `${rsvpDateISO}T${validatedData.rsvpDeadlineTime}`
+    );
+
+    const eventData: InsertEvent = {
+      userId: (session.user as ExtendedUser).id,
+      title: validatedData.title,
+      location: validatedData.location,
+      eventStartDatetime,
+      eventEndDatetime,
+      rsvpDeadline,
+      status: "draft" as const,
+    };
+
+    const updatedEvent = await db
+      .update(events)
+      .set(eventData)
+      .where(eq(events.id, eventId))
+      .returning();
+
+    revalidatePath("/dashboard");
+    revalidatePath(`/dashboard/events/${eventId}`);
+
+    return { success: true, event: updatedEvent[0] };
+  } catch (error) {
+    if (error instanceof ZodError) {
+      const errorMessage = error.errors.map((err) => err.message).join(", ");
+      return { success: false, error: errorMessage };
+    }
+
+    console.error("Failed to create event:", error);
+    return {
+      success: false,
+      error: "Failed to create event. Please try again.",
     };
   }
 }

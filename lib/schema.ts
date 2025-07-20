@@ -1,12 +1,9 @@
 import { z } from "zod";
+import { convertToISODate } from "./utils";
+import { DIETARY_RESTRICTIONS, RESPOND_STATUSES } from "./const";
 
 // TODO: Future timezone support
 // For now, i cannot verify against date now because of time zone difference (possibly) in server and client
-
-export const convertToISODate = (ddmmyyyy: string): string => {
-  const [day, month, year] = ddmmyyyy.split("/");
-  return `${year}-${month.padStart(2, "0")}-${day.padStart(2, "0")}`;
-};
 
 export const createEventSchema = z
   .object({
@@ -57,3 +54,33 @@ export const createEventSchema = z
   );
 
 export type CreateEventInput = z.infer<typeof createEventSchema>;
+
+// TODO: edit event schema? id should exist in the database
+
+export const createGuestGroupSchema = z.object({
+  name: z.string().min(1, "Name is required"),
+  isVisible: z.boolean().default(true),
+});
+
+export type CreateGuestGroupInput = z.infer<typeof createGuestGroupSchema>;
+
+export const editInviteSchema = (guestLimit: number) =>
+  z
+    .object({
+      respondStatus: z.nativeEnum(RESPOND_STATUSES),
+      dietaryRestrictions: z.nativeEnum(DIETARY_RESTRICTIONS),
+      attendingCount: z
+        .number()
+        .min(0, "Attending count must be greater than 0"),
+    })
+    .refine(
+      (data) => {
+        return data.attendingCount <= guestLimit;
+      },
+      {
+        message: "Attending count must be less than or equal to guest limit",
+        path: ["attendingCount"],
+      }
+    );
+
+export type EditInviteInput = z.infer<ReturnType<typeof editInviteSchema>>;
