@@ -108,3 +108,13 @@ export interface attendingGuest {
 export interface getEventSummaryProps {
   eventId: string;
 }
+
+export interface DeleteGuestByIdProps {
+  guestId: string;
+}
+export interface GetGuestByIdProps {
+  guestId: string;
+}
+export interface GetGuestsByEventIdProps {
+  eventId: string;
+}

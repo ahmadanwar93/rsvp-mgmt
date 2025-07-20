@@ -67,6 +67,7 @@ export async function createEvent(formData: FormData) {
 
     return { success: true, eventId: newEvent[0].id };
   } catch (error) {
+    // TODO: maybe all schema errors should be handled as such
     if (error instanceof ZodError) {
       const errorMessage = error.errors.map((err) => err.message).join(", ");
       return { success: false, error: errorMessage };

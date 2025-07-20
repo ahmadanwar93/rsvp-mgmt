@@ -3,12 +3,19 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import { getEventById } from "./events";
-import { ExtendedUser, showEventProps } from "@/lib/types";
+import {
+  DeleteGuestByIdProps,
+  ExtendedUser,
+  GetGuestByIdProps,
+  GetGuestsByEventIdProps,
+  showEventProps,
+} from "@/lib/types";
 import { db } from "@/src/db";
 import { guests, guestGroups } from "@/src/db/schema";
 import { eq } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
-export async function getGuestsByEventId(eventId: string) {
+export async function getGuestsByEventId({ eventId }: GetGuestsByEventIdProps) {
   const session = await getServerSession(authOptions);
   if (!session || !session.user) {
     return {
@@ -59,7 +66,7 @@ export async function getGuestsByEventId(eventId: string) {
   }
 }
 
-export async function getGuestById(guestId: string) {
+export async function getGuestById({ guestId }: GetGuestByIdProps) {
   // This is an unprotected route. Will be used in the invitation page to check if a guest id exists
   try {
     const guest = await db.query.guests.findFirst({
@@ -75,6 +82,49 @@ export async function getGuestById(guestId: string) {
     return {
       success: false,
       error: "Failed to fetch guest. Please try again.",
+    };
+  }
+}
+
+export async function deleteGuestById({ guestId }: DeleteGuestByIdProps) {
+  const session = await getServerSession(authOptions);
+
+  if (!session || !session.user) {
+    return {
+      success: false,
+      error: "You must be logged in to delete a guest",
+    };
+  }
+
+  try {
+    const existingGuest = await db.query.guests.findFirst({
+      where: eq(guests.id, guestId),
+    });
+
+    if (!existingGuest) {
+      return {
+        success: false,
+        error: "Guest not found",
+      };
+    }
+
+    const deletedGuest = await db
+      .delete(guests)
+      .where(eq(guests.id, guestId))
+      .returning();
+
+    revalidatePath(`/events/${existingGuest.eventId}`);
+
+    return {
+      success: true,
+      message: "Guest deleted successfully",
+      deletedGuest: deletedGuest[0],
+    };
+  } catch (error) {
+    console.error("Failed to create event:", error);
+    return {
+      success: false,
+      error: "Failed to create event. Please try again.",
     };
   }
 }

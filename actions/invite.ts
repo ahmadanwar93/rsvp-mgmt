@@ -9,7 +9,7 @@ import { editInviteSchema } from "@/lib/schema";
 import { revalidatePath } from "next/cache";
 
 export async function getInviteByGuestId({ guestId }: { guestId: string }) {
-  const guest = await getGuestById(guestId);
+  const guest = await getGuestById({ guestId });
 
   if (!guest.success) {
     return {
@@ -96,7 +96,7 @@ export async function updateInviteByGuestId({
   attendingCount,
   guestLimit,
 }: updateInviteProps) {
-  const guest = await getGuestById(guestId);
+  const guest = await getGuestById({ guestId });
 
   if (!guest.success) {
     return {
